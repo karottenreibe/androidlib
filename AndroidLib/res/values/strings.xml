@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hello">Hello World!</string>
-    <string name="app_name">AndroidLib</string>
+    <string name="internal_error">This is not the bug you are looking for!\n*scramble scramble*\nFATAL ERROR\n...\nSHUTTING DOWN...</string>
 
 </resources>
