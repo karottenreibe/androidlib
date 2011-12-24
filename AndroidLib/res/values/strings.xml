@@ -2,5 +2,7 @@
 <resources>
 
     <string name="internal_error">This is not the bug you are looking for!\n*scramble scramble*\nFATAL ERROR\n...\nSHUTTING DOWN...</string>
+    <string name="no_external_storage">The external storage is not available right now</string>
+    <string name="mkdirs_failed">Could not create the directories necessary for saving the application\'s data</string>
 
 </resources>
