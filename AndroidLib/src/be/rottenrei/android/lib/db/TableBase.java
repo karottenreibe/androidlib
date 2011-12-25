@@ -55,7 +55,7 @@ public abstract class TableBase<ModelType extends IModelType> {
 	}
 
 	protected List<ModelType> getSelection(String selection, String[] selectionArgs) throws DatabaseException {
-		Cursor cursor = db.query(getTableName(), getColumns(), selection, selectionArgs, null, null, null);
+		Cursor cursor = getCursor(selection, selectionArgs);
 		List<ModelType> allItems = new LinkedList<ModelType>();
 		TableSerializer<ModelType> serializer = getSerializer();
 
@@ -66,6 +66,10 @@ public abstract class TableBase<ModelType extends IModelType> {
 			cursor.moveToNext();
 		}
 		return allItems;
+	}
+
+	public Cursor getCursor(String selection, String[] selectionArgs) {
+		return db.query(getTableName(), getColumns(), selection, selectionArgs, null, null, null);
 	}
 
 	public ModelType get(ModelType object) throws DatabaseException {
@@ -83,7 +87,7 @@ public abstract class TableBase<ModelType extends IModelType> {
 		return getSerializer().deSerialize(cursor);
 	}
 
-	abstract protected TableSerializer<ModelType> getSerializer();
+	abstract public TableSerializer<ModelType> getSerializer();
 
 	abstract protected String[] getColumns();
 
