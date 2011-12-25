@@ -68,7 +68,7 @@ public abstract class TableBase<ModelType extends IModelType> {
 		return allItems;
 	}
 
-	public Cursor getCursor(String selection, String[] selectionArgs) {
+	protected Cursor getCursor(String selection, String[] selectionArgs) {
 		return db.query(getTableName(), getColumns(), selection, selectionArgs, null, null, null);
 	}
 
@@ -87,7 +87,7 @@ public abstract class TableBase<ModelType extends IModelType> {
 		return getSerializer().deSerialize(cursor);
 	}
 
-	abstract public TableSerializer<ModelType> getSerializer();
+	abstract protected TableSerializer<ModelType> getSerializer();
 
 	abstract protected String[] getColumns();
 
