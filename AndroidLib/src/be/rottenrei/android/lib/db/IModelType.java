@@ -7,6 +7,6 @@ public interface IModelType {
 
 	public Long getDbId();
 
-	public void setDbId(long id);
+	public void setDbId(Long id);
 
 }
