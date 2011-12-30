@@ -53,9 +53,19 @@ public class FileUtils {
 		if (!ensureExternalStorageIsAvailable(context)) {
 			return false;
 		}
+		if (!isFileReadyForWriting(file)) {
+			UIUtils.informUser(context, R.string.mkdirs_failed);
+			return false;
+		}
+		return true;
+	}
+
+	public static boolean isFileReadyForWriting(File file) {
+		if (!isExternalStorageAvailable()) {
+			return false;
+		}
 		File directory = file.getParentFile();
 		if (!directory.exists() && !directory.mkdirs()) {
-			UIUtils.informUser(context, R.string.mkdirs_failed);
 			return false;
 		}
 		return true;
