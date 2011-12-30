@@ -35,8 +35,24 @@ public class FileUtils {
 		}
 	}
 
+	public static boolean ensureFolderIsAvailable(Context context, File folder) {
+		if (isFolderAvailable(folder)) {
+			return true;
+		} else {
+			UIUtils.informUser(context, R.string.error_no_folder, folder.getAbsolutePath());
+			return false;
+		}
+	}
+
+	public static boolean isFolderAvailable(File folder) {
+		return folder.exists() && folder.isDirectory();
+	}
+
 	/** Creates the directory structure above the file or warns the user that the operation failed. */
 	public static boolean ensureFileIsReadyForWriting(File file, Context context) {
+		if (!ensureExternalStorageIsAvailable(context)) {
+			return false;
+		}
 		File directory = file.getParentFile();
 		if (!directory.exists() && !directory.mkdirs()) {
 			UIUtils.informUser(context, R.string.mkdirs_failed);
