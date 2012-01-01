@@ -1,4 +1,4 @@
-package be.rottenrei.android.lib.app;
+package be.rottenrei.android.lib.view;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
