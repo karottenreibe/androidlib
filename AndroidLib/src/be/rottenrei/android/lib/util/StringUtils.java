@@ -1,5 +1,8 @@
 package be.rottenrei.android.lib.util;
 
+import android.content.Context;
+import android.text.TextUtils;
+
 /**
  * Utility functions for working with Strings and CharSequences.
  */
@@ -23,6 +26,10 @@ public class StringUtils {
 			first = false;
 		}
 		return builder.toString();
+	}
+
+	public static CharSequence getTemplateText(Context context, int stringId, CharSequence... values) {
+		return TextUtils.expandTemplate(context.getText(stringId), values);
 	}
 
 }
