@@ -7,5 +7,6 @@
     <string name="error_no_folder">The required folder ^1 does not exist</string>
     <string name="progress_preparing">Preparing...</string>
     <string name="no_database">There seems to be a problem with the database</string>
+    <string name="btn_delete">✘</string>
 
 </resources>
