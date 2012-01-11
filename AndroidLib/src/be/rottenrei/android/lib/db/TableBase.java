@@ -77,7 +77,7 @@ public abstract class TableBase<ModelType extends IModelType> {
 		return get(dbId);
 	}
 
-	private ModelType get(Long dbId) throws DatabaseException {
+	public ModelType get(Long dbId) throws DatabaseException {
 		Cursor cursor = db.query(true, getTableName(), getColumns(), KEY_ID + "=" + dbId,
 				null, null, null, null, null);
 		if (cursor == null) {
