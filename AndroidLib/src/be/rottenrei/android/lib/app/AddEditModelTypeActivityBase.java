@@ -15,6 +15,8 @@ import be.rottenrei.android.lib.util.ExceptionUtils;
  */
 public abstract class AddEditModelTypeActivityBase<ModelType extends IModelType> extends Activity {
 
+	public static final String DELETED_EXTRA = AddEditModelTypeActivityBase.class.getName() + ".deleted";
+
 	private Long dbId;
 
 	protected abstract ModelType getModel();
@@ -66,12 +68,12 @@ public abstract class AddEditModelTypeActivityBase<ModelType extends IModelType>
 		outState.putParcelable(getExtra(), parcel(getModelInternal()));
 	}
 
-	public void onCancel(@SuppressWarnings("unused") View view) {
+	public void onCancelClicked(@SuppressWarnings("unused") View view) {
 		setResult(RESULT_CANCELED);
 		finish();
 	}
 
-	public void onSave(@SuppressWarnings("unused") View view) {
+	public void onSaveClicked(@SuppressWarnings("unused") View view) {
 		ModelType model = getModelInternal();
 		if (!validate(model)) {
 			return;
@@ -87,4 +89,18 @@ public abstract class AddEditModelTypeActivityBase<ModelType extends IModelType>
 		finish();
 	}
 
+	public void onDeleteClicked(@SuppressWarnings("unused") View view) {
+		ModelType model = getModelInternal();
+		try {
+			delete(model);
+		} catch (DatabaseException e) {
+			ExceptionUtils.handleExceptionWithMessage(e, this, R.string.no_database, AddEditModelTypeActivityBase.class);
+		}
+		Intent intent = new Intent();
+		intent.putExtra(DELETED_EXTRA, true);
+		setResult(RESULT_OK, intent);
+		finish();
+	}
+
+	abstract protected void delete(ModelType model) throws DatabaseException;
 }
