@@ -1,6 +1,8 @@
 package be.rottenrei.android.lib.app;
 
 import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -9,6 +11,7 @@ import be.rottenrei.android.lib.R;
 import be.rottenrei.android.lib.db.DatabaseException;
 import be.rottenrei.android.lib.db.IModelType;
 import be.rottenrei.android.lib.util.ExceptionUtils;
+import be.rottenrei.android.lib.util.UIUtils;
 
 /**
  * Base class for activities that edit and/or add {@link IModelType}s.
@@ -90,6 +93,16 @@ public abstract class AddEditModelTypeActivityBase<ModelType extends IModelType>
 	}
 
 	public void onDeleteClicked(@SuppressWarnings("unused") View view) {
+		UIUtils.confirm(this, R.string.confirm_delete, new OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface arg0, int arg1) {
+				performDelete();
+			}
+		});
+	}
+
+	private void performDelete() {
 		ModelType model = getModelInternal();
 		try {
 			delete(model);
