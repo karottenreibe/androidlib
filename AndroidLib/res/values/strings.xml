@@ -12,5 +12,7 @@
     <string name="cancel">Cancel</string>
     <string name="confirm">Are you sure?</string>
     <string name="confirm_delete">Do you really want to delete this item?</string>
+    <string name="success_delete">Successfully deleted!</string>
+    <string name="success_edit">Successfully modified!</string>
 
 </resources>

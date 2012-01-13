@@ -38,17 +38,6 @@ public abstract class AddEditModelTypeActivityBase<ModelType extends IModelType>
 
 	protected abstract int getLayoutId();
 
-	private final ModelType getModelInternal() {
-		ModelType model = getModel();
-		model.setDbId(dbId);
-		return model;
-	}
-
-	private final void setModelInternal(ModelType model) {
-		dbId = model.getDbId();
-		setModel(model);
-	}
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -63,6 +52,17 @@ public abstract class AddEditModelTypeActivityBase<ModelType extends IModelType>
 		if (model != null) {
 			setModelInternal(model);
 		}
+	}
+
+	private final ModelType getModelInternal() {
+		ModelType model = getModel();
+		model.setDbId(dbId);
+		return model;
+	}
+
+	private final void setModelInternal(ModelType model) {
+		dbId = model.getDbId();
+		setModel(model);
 	}
 
 	@Override
@@ -86,6 +86,7 @@ public abstract class AddEditModelTypeActivityBase<ModelType extends IModelType>
 		} catch (DatabaseException e) {
 			ExceptionUtils.handleExceptionWithMessage(e, this, R.string.no_database, AddEditModelTypeActivityBase.class);
 		}
+		UIUtils.informUser(this, R.string.success_edit);
 		Intent intent = new Intent();
 		intent.putExtra(getExtra(), parcel(model));
 		setResult(RESULT_OK, intent);
@@ -109,6 +110,7 @@ public abstract class AddEditModelTypeActivityBase<ModelType extends IModelType>
 		} catch (DatabaseException e) {
 			ExceptionUtils.handleExceptionWithMessage(e, this, R.string.no_database, AddEditModelTypeActivityBase.class);
 		}
+		UIUtils.informUser(this, R.string.success_delete);
 		Intent intent = new Intent();
 		intent.putExtra(DELETED_EXTRA, true);
 		setResult(RESULT_OK, intent);
