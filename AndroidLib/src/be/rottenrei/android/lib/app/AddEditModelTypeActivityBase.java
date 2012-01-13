@@ -44,10 +44,14 @@ public abstract class AddEditModelTypeActivityBase<ModelType extends IModelType>
 		setContentView(getLayoutId());
 		Intent intent = getIntent();
 		ModelType model = null;
+		Parcelable extra = null;
 		if (savedInstanceState != null) {
-			model = unparcel(savedInstanceState.getParcelable(getExtra()));
+			extra = savedInstanceState.getParcelable(getExtra());
 		} else if (intent != null) {
-			model = unparcel(intent.getParcelableExtra(getExtra()));
+			extra = intent.getParcelableExtra(getExtra());
+		}
+		if (extra != null) {
+			model = unparcel(extra);
 		}
 		if (model != null) {
 			setModelInternal(model);
