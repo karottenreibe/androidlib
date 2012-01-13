@@ -4,4 +4,4 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:text="FooBar Goo!"
-    android:id="@+id/listEntryText" />
+    android:id="@+id/listItemText" />
