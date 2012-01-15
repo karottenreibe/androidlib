@@ -3,5 +3,6 @@
         <style name="list_item">
             <item name="android:padding">20px</item>
             <item name="android:textSize">20px</item>
+            <item name="android:background">@drawable/button_selector</item>
         </style>
     </resources>

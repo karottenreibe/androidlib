@@ -3,10 +3,12 @@ package be.rottenrei.android.lib.view;
 import java.util.List;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import be.rottenrei.android.lib.R;
 
 /**
  * Simple adapter that converts every object into a simple string set on a TextView.
@@ -23,9 +25,7 @@ public abstract class TextOnlyAdapter<ObjectType> extends ArrayAdapter<ObjectTyp
 		if (convertView != null && convertView instanceof TextView) {
 			view = (TextView) convertView;
 		} else {
-			view = new TextView(getContext());
-			view.setTextSize(20);
-			view.setPadding(20, 20, 20, 20);
+			view = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent, false);
 		}
 		view.setText(getText(getItem(position)));
 		attachViewListeners(position, view);

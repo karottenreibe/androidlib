@@ -1,3 +1,5 @@
 <resources>
     <color name="widget_background">#70000000</color>
+	<color name="selected">#33b5e5</color>
+	<color name="transparent">#00000000</color>
 </resources>
