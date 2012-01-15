@@ -17,7 +17,7 @@ abstract public class ModelCursorAdapterBase<ModelType extends IModelType> exten
 	private final int layoutId;
 
 	public ModelCursorAdapterBase(Context context, TableBase<ModelType> table, int layoutId) {
-		super(context, table.getCursor(null, null));
+		super(context, table.getCursor(null, null, null));
 		this.table = table;
 		this.layoutId = layoutId;
 	}
