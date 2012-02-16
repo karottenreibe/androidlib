@@ -16,7 +16,7 @@ abstract public class DatabaseVersionBase implements IDatabaseVersion {
 		}
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
-			String name = cursor.getString(cursor.getColumnIndex("name"));
+			String name = cursor.getString(cursor.getColumnIndex("key"));
 			if (column.equals(name)) {
 				return true;
 			}
@@ -26,13 +26,13 @@ abstract public class DatabaseVersionBase implements IDatabaseVersion {
 	}
 
 	protected boolean tableExists(SQLiteDatabase db, String tableName) {
-		Cursor cursor = db.query("sqlite_master", new String[] { "name" }, "type = 'table'", null, null, null, null);
+		Cursor cursor = db.query("sqlite_master", new String[] { "key" }, "type = 'table'", null, null, null, null);
 		if (cursor == null) {
 			return false;
 		}
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
-			String name = cursor.getString(cursor.getColumnIndex("name"));
+			String name = cursor.getString(cursor.getColumnIndex("key"));
 			if (tableName.equals(name)) {
 				return true;
 			}

@@ -25,7 +25,7 @@ public abstract class DatabaseOpenHelperBase extends SQLiteOpenHelper {
 		upgradeFrom(database, 0);
 	}
 
-	private void upgradeFrom(SQLiteDatabase database, int baseVersion) {
+	public void upgradeFrom(SQLiteDatabase database, int baseVersion) {
 		Stack<IDatabaseVersion> versions = new Stack<IDatabaseVersion>();
 		IDatabaseVersion current = currentVersion;
 		while (current != null && current.getVersion() > baseVersion) {

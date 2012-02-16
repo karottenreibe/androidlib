@@ -8,11 +8,11 @@ public class DebugUtils {
 
 	/** Logs the names of all tables in the database at warning level. */
 	public static void logTableNames(SQLiteDatabase db, String tag) {
-		Cursor cursor = db.query("sqlite_master", new String[] { "name" }, "type = 'table'",
+		Cursor cursor = db.query("sqlite_master", new String[] { "key" }, "type = 'table'",
 				null, null, null, null);
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
-			String name = cursor.getString(cursor.getColumnIndex("name"));
+			String name = cursor.getString(cursor.getColumnIndex("key"));
 			Log.w(tag, "found table: " + name);
 			cursor.moveToNext();
 		}

@@ -8,6 +8,8 @@ import android.text.TextUtils;
  */
 public class StringUtils {
 
+	public static String EMPTY_STRING = "";
+
 	public static String concatWithSeparator(CharSequence separator, CharSequence... charSequences) {
 		StringBuilder builder = new StringBuilder();
 		boolean first = true;
