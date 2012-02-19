@@ -7,11 +7,9 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import be.rottenrei.android.lib.R;
-import be.rottenrei.android.lib.db.DatabaseException;
 import be.rottenrei.android.lib.util.ExceptionUtils;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
-import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 
 /**
@@ -64,14 +62,6 @@ public abstract class DatabaseOpenHelperBase extends OrmLiteSqliteOpenHelper {
 
 	public Context getContext() {
 		return context;
-	}
-
-	protected <D extends Dao<T, ?>, T> D getDaoSafe(Class<T> modelClass) throws DatabaseException {
-		try {
-			return super.getDao(modelClass);
-		} catch (SQLException e) {
-			throw new DatabaseException(getContext().getText(R.string.no_database).toString());
-		}
 	}
 
 }

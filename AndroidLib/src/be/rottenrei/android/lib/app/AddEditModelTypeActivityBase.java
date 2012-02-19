@@ -1,5 +1,7 @@
 package be.rottenrei.android.lib.app;
 
+import java.sql.SQLException;
+
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -8,19 +10,15 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.View;
 import be.rottenrei.android.lib.R;
-import be.rottenrei.android.lib.db.DatabaseException;
-import be.rottenrei.android.lib.db.IModelType;
 import be.rottenrei.android.lib.util.ExceptionUtils;
 import be.rottenrei.android.lib.util.UIUtils;
 
 /**
- * Base class for activities that edit and/or add {@link IModelType}s.
+ * Base class for activities that edit and/or add model elements.
  */
-public abstract class AddEditModelTypeActivityBase<ModelType extends IModelType> extends Activity {
+public abstract class AddEditModelTypeActivityBase<ModelType> extends Activity {
 
 	public static final String DELETED_EXTRA = AddEditModelTypeActivityBase.class.getName() + ".deleted";
-
-	private Long dbId;
 
 	protected abstract ModelType getModel();
 
@@ -28,7 +26,7 @@ public abstract class AddEditModelTypeActivityBase<ModelType extends IModelType>
 
 	protected abstract boolean validate(ModelType model);
 
-	protected abstract void persist(ModelType model) throws DatabaseException;
+	protected abstract void persist(ModelType model) throws SQLException;
 
 	protected abstract String getExtra();
 
@@ -54,25 +52,14 @@ public abstract class AddEditModelTypeActivityBase<ModelType extends IModelType>
 			model = unparcel(extra);
 		}
 		if (model != null) {
-			setModelInternal(model);
+			setModel(model);
 		}
-	}
-
-	private final ModelType getModelInternal() {
-		ModelType model = getModel();
-		model.setDbId(dbId);
-		return model;
-	}
-
-	private final void setModelInternal(ModelType model) {
-		dbId = model.getDbId();
-		setModel(model);
 	}
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		outState.putParcelable(getExtra(), parcel(getModelInternal()));
+		outState.putParcelable(getExtra(), parcel(getModel()));
 	}
 
 	public void onCancelClicked(@SuppressWarnings("unused") View view) {
@@ -81,13 +68,13 @@ public abstract class AddEditModelTypeActivityBase<ModelType extends IModelType>
 	}
 
 	public void onSaveClicked(@SuppressWarnings("unused") View view) {
-		ModelType model = getModelInternal();
+		ModelType model = getModel();
 		if (!validate(model)) {
 			return;
 		}
 		try {
 			persist(model);
-		} catch (DatabaseException e) {
+		} catch (SQLException e) {
 			ExceptionUtils.handleExceptionWithMessage(e, this, R.string.no_database, AddEditModelTypeActivityBase.class);
 		}
 		UIUtils.informUser(this, R.string.success_edit);
@@ -108,10 +95,10 @@ public abstract class AddEditModelTypeActivityBase<ModelType extends IModelType>
 	}
 
 	private void performDelete() {
-		ModelType model = getModelInternal();
+		ModelType model = getModel();
 		try {
 			delete(model);
-		} catch (DatabaseException e) {
+		} catch (SQLException e) {
 			ExceptionUtils.handleExceptionWithMessage(e, this, R.string.no_database, AddEditModelTypeActivityBase.class);
 		}
 		UIUtils.informUser(this, R.string.success_delete);
@@ -121,5 +108,5 @@ public abstract class AddEditModelTypeActivityBase<ModelType extends IModelType>
 		finish();
 	}
 
-	abstract protected void delete(ModelType model) throws DatabaseException;
+	abstract protected void delete(ModelType model) throws SQLException;
 }
