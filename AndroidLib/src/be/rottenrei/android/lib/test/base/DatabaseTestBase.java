@@ -2,43 +2,49 @@ package be.rottenrei.android.lib.test.base;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+
+import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
+import com.j256.ormlite.support.ConnectionSource;
+import com.j256.ormlite.table.TableUtils;
 
 abstract public class DatabaseTestBase extends GenericInstrumentationTestBase {
 
-	protected SQLiteDatabase db;
+	private TestDatabaseOpenHelper helper;
 
-	protected class TestDatabaseOpenHelper extends SQLiteOpenHelper {
+	protected class TestDatabaseOpenHelper extends OrmLiteSqliteOpenHelper {
 
 		public TestDatabaseOpenHelper(Context context, String name) {
 			super(context, name, null, 1);
 		}
 
 		@Override
-		public void onCreate(SQLiteDatabase db) {
+		public void onCreate(SQLiteDatabase arg0, ConnectionSource arg1) {
 			// nothing to do
 		}
 
 		@Override
-		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		public void onUpgrade(SQLiteDatabase arg0, ConnectionSource arg1, int arg2, int arg3) {
 			// nothing to do
 		}
 
+	}
 
+	public TestDatabaseOpenHelper getHelper() {
+		return helper;
 	}
 
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
-		db = new TestDatabaseOpenHelper(getContext(), getDatabaseName()).getWritableDatabase();
+		helper = new TestDatabaseOpenHelper(getContext(), getDatabaseName());
 		// drop all tables
-		for (String tableName : getTableNames()) {
-			db.execSQL("drop table if exists " + tableName + ";");
+		for (Class<?> clazz : getDataClasses()) {
+			TableUtils.dropTable(helper.getConnectionSource(), clazz, true);
 		}
 	}
 
 	abstract protected String getDatabaseName();
 
-	abstract protected String[] getTableNames();
+	abstract protected Class<?>[] getDataClasses();
 
 }
