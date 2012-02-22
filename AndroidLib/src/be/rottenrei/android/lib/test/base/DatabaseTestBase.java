@@ -43,6 +43,20 @@ abstract public class DatabaseTestBase extends GenericInstrumentationTestBase {
 		}
 	}
 
+	@Override
+	protected void tearDown() throws Exception {
+		helper.close();
+		super.tearDown();
+	}
+
+	protected SQLiteDatabase getDatabase() {
+		return helper.getWritableDatabase();
+	}
+
+	protected ConnectionSource getConnectionSource() {
+		return helper.getConnectionSource();
+	}
+
 	abstract protected String getDatabaseName();
 
 	abstract protected Class<?>[] getDataClasses();
