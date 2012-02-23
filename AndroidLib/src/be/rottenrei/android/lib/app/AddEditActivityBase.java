@@ -16,9 +16,9 @@ import be.rottenrei.android.lib.util.UIUtils;
 /**
  * Base class for activities that edit and/or add model elements.
  */
-public abstract class AddEditModelTypeActivityBase<ModelType> extends Activity {
+public abstract class AddEditActivityBase<ModelType> extends Activity {
 
-	public static final String DELETED_EXTRA = AddEditModelTypeActivityBase.class.getName() + ".deleted";
+	public static final String DELETED_EXTRA = AddEditActivityBase.class.getName() + ".deleted";
 
 	protected abstract ModelType getModel();
 
@@ -34,12 +34,10 @@ public abstract class AddEditModelTypeActivityBase<ModelType> extends Activity {
 
 	protected abstract ModelType unparcel(Parcelable parcelable);
 
-	protected abstract int getLayoutId();
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(getLayoutId());
+		setupView();
 		Intent intent = getIntent();
 		ModelType model = null;
 		Parcelable extra = null;
@@ -55,6 +53,9 @@ public abstract class AddEditModelTypeActivityBase<ModelType> extends Activity {
 			setModel(model);
 		}
 	}
+
+	/** Must set the content view. */
+	protected abstract void setupView();
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
@@ -75,7 +76,7 @@ public abstract class AddEditModelTypeActivityBase<ModelType> extends Activity {
 		try {
 			persist(model);
 		} catch (SQLException e) {
-			ExceptionUtils.handleExceptionWithMessage(e, this, R.string.no_database, AddEditModelTypeActivityBase.class);
+			ExceptionUtils.handleExceptionWithMessage(e, this, R.string.no_database, AddEditActivityBase.class);
 		}
 		UIUtils.informUser(this, R.string.success_edit);
 		Intent intent = new Intent();
@@ -99,7 +100,7 @@ public abstract class AddEditModelTypeActivityBase<ModelType> extends Activity {
 		try {
 			delete(model);
 		} catch (SQLException e) {
-			ExceptionUtils.handleExceptionWithMessage(e, this, R.string.no_database, AddEditModelTypeActivityBase.class);
+			ExceptionUtils.handleExceptionWithMessage(e, this, R.string.no_database, AddEditActivityBase.class);
 		}
 		UIUtils.informUser(this, R.string.success_delete);
 		Intent intent = new Intent();
