@@ -50,7 +50,6 @@ public abstract class DatabaseOpenHelperBase extends OrmLiteSqliteOpenHelper {
 		} catch (SQLException e) {
 			ExceptionUtils.handleFatalExceptionWithMessage(e, getContext(), R.string.error_db_migrate, DatabaseOpenHelperBase.class);
 		}
-		onCreate(database);
 	}
 
 	public Context getContext() {

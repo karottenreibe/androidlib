@@ -15,8 +15,17 @@ import be.rottenrei.android.lib.R;
  */
 public abstract class TextOnlyAdapter<ObjectType> extends ArrayAdapter<ObjectType> {
 
+	private int listItemLayoutId = R.layout.list_item;
+
+	/** Use this e.g. for Spinners, which need R.layout.spinner_list_item. */
+	public TextOnlyAdapter(Context context, List<ObjectType> objects, int listItemLayoutId) {
+		super(context, listItemLayoutId, objects);
+		this.listItemLayoutId = listItemLayoutId;
+	}
+
+	/** Uses R.layout.list_item for the list items. */
 	public TextOnlyAdapter(Context context, List<ObjectType> objects) {
-		super(context, 0, objects);
+		this(context, objects, R.layout.list_item);
 	}
 
 	@Override
@@ -25,7 +34,7 @@ public abstract class TextOnlyAdapter<ObjectType> extends ArrayAdapter<ObjectTyp
 		if (convertView != null && convertView instanceof TextView) {
 			view = (TextView) convertView;
 		} else {
-			view = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent, false);
+			view = (TextView) LayoutInflater.from(getContext()).inflate(listItemLayoutId, parent, false);
 		}
 		view.setText(getText(getItem(position)));
 		attachViewListeners(position, view);
