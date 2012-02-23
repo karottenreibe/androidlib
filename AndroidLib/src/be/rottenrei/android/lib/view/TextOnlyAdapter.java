@@ -41,6 +41,11 @@ public abstract class TextOnlyAdapter<ObjectType> extends ArrayAdapter<ObjectTyp
 		return view;
 	}
 
+	@Override
+	public View getDropDownView(int position, View convertView, ViewGroup parent) {
+		return getView(position, convertView, parent);
+	}
+
 	@SuppressWarnings("unused")
 	protected void attachViewListeners(int position, TextView view) {
 		// empty default implementation
