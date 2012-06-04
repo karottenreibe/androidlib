@@ -11,27 +11,27 @@ import be.rottenrei.android.lib.R;
 public class ExceptionUtils {
 
 	/** The throwable can be null. */
-	public static void shouldNeverBeReached(Activity activity, Class<?> clazz, Throwable cause) {
+	public static void shouldNeverBeReached(Activity activity, Throwable cause) {
 		if (cause == null) {
 			cause = new IllegalStateException("An impossible state has been reached");
 		}
-		handleFatalExceptionWithMessage(cause, activity, R.string.internal_error, clazz);
+		handleFatalExceptionWithMessage(cause, activity, R.string.error_internal);
 	}
 
 	/** Logs the exception and displays the warning message to the user. */
-	public static void handleExceptionWithMessage(Throwable cause, Context context, int message, Class<?> clazz) {
-		logException(cause, context, message, clazz);
+	public static void handleExceptionWithMessage(Throwable cause, Context context, int message) {
+		logException(cause, context, message);
 		UIUtils.informUser(context, message);
 	}
 
 	/** Just logs the exception with the given message. */
-	public static void logException(Throwable cause, Context context, int message, Class<?> clazz) {
-		Log.e(clazz.getName(), context.getString(message), cause);
+	public static void logException(Throwable cause, Context context, int message) {
+		Log.e("flashcards", context.getString(message), cause);
 	}
 
 	/** Handles the exception and finishes the activity if possible. */
-	public static void handleFatalExceptionWithMessage(Throwable cause, Context context, int message, Class<?> clazz) {
-		handleExceptionWithMessage(cause, context, message, clazz);
+	public static void handleFatalExceptionWithMessage(Throwable cause, Context context, int message) {
+		handleExceptionWithMessage(cause, context, message);
 		if (context instanceof Activity) {
 			Activity activity = (Activity) context;
 			activity.finish();

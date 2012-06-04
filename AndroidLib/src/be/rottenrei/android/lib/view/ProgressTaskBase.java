@@ -54,7 +54,7 @@ public abstract class ProgressTaskBase<Params, Result> extends AsyncTask<Params,
 			dialog.dismiss();
 		}
 		if (exception != null) {
-			ExceptionUtils.handleExceptionWithMessage(exception, activity, exceptionMessage, ProgressTaskBase.class);
+			ExceptionUtils.handleExceptionWithMessage(exception, activity, exceptionMessage);
 			return;
 		}
 	}

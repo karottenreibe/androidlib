@@ -35,7 +35,7 @@ public abstract class DatabaseOpenHelperBase extends OrmLiteSqliteOpenHelper {
 			}
 			getMigrationManager().populateNewDatabase(database, source);
 		} catch (SQLException e) {
-			ExceptionUtils.handleFatalExceptionWithMessage(e, getContext(), R.string.error_db_migrate, DatabaseOpenHelperBase.class);
+			ExceptionUtils.handleFatalExceptionWithMessage(e, getContext(), R.string.error_db_migrate);
 		}
 	}
 
@@ -48,7 +48,7 @@ public abstract class DatabaseOpenHelperBase extends OrmLiteSqliteOpenHelper {
 		try {
 			getMigrationManager().upgradeFrom(database, source, oldVersion);
 		} catch (SQLException e) {
-			ExceptionUtils.handleFatalExceptionWithMessage(e, getContext(), R.string.error_db_migrate, DatabaseOpenHelperBase.class);
+			ExceptionUtils.handleFatalExceptionWithMessage(e, getContext(), R.string.error_db_migrate);
 		}
 	}
 

@@ -30,7 +30,7 @@ public class FileUtils {
 		if (isExternalStorageAvailable()) {
 			return true;
 		} else {
-			UIUtils.informUser(context, R.string.no_external_storage);
+			UIUtils.informUser(context, R.string.error_no_external_storage);
 			return false;
 		}
 	}
@@ -54,7 +54,7 @@ public class FileUtils {
 			return false;
 		}
 		if (!isFileReadyForWriting(file)) {
-			UIUtils.informUser(context, R.string.mkdirs_failed);
+			UIUtils.informUser(context, R.string.error_mkdirs_failed);
 			return false;
 		}
 		return true;
