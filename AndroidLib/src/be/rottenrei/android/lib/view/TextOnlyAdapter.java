@@ -46,7 +46,6 @@ public abstract class TextOnlyAdapter<ObjectType> extends ArrayAdapter<ObjectTyp
 		return getView(position, convertView, parent);
 	}
 
-	@SuppressWarnings("unused")
 	protected void attachViewListeners(int position, TextView view) {
 		// empty default implementation
 	}

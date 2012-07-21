@@ -1,7 +1,7 @@
 package be.rottenrei.android.lib.view;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 import be.rottenrei.android.lib.R;
@@ -10,25 +10,28 @@ import be.rottenrei.android.lib.util.ExceptionUtils;
 /**
  * Base class that handles the progress dialog and exceptions.
  */
-public abstract class ProgressTaskBase<Params, Result> extends AsyncTask<Params, String, Result> {
+public abstract class ProgressTaskBase<Params, Result> extends
+		AsyncTask<Params, String, Result> {
 
 	protected ProgressDialog dialog;
 	protected Exception exception = null;
 	protected Integer exceptionMessage = null;
-	protected Activity activity;
+	protected Context context;
 
-	public static <P, T extends ProgressTaskBase<P, ?>> void createAndRun(T task, Activity activity, P... params) {
-		task.setActivity(activity);
+	public static <P, T extends ProgressTaskBase<P, ?>> void createAndRun(
+			T task, Context activity, P... params) {
+		task.setContext(activity);
 		task.execute(params);
 	}
 
-	public void setActivity(Activity activity) {
-		this.activity = activity;
-		dialog = new ProgressDialog(activity);
+	public void setContext(Context context) {
+		this.context = context;
+		dialog = new ProgressDialog(context);
 	}
 
 	protected String getString(int messageId, CharSequence... params) {
-		return TextUtils.expandTemplate(activity.getText(messageId), params).toString();
+		return TextUtils.expandTemplate(context.getText(messageId), params)
+				.toString();
 	}
 
 	@Override
@@ -54,7 +57,8 @@ public abstract class ProgressTaskBase<Params, Result> extends AsyncTask<Params,
 			dialog.dismiss();
 		}
 		if (exception != null) {
-			ExceptionUtils.handleExceptionWithMessage(exception, activity, exceptionMessage);
+			ExceptionUtils.handleExceptionWithMessage(exception, context,
+					exceptionMessage);
 			return;
 		}
 	}

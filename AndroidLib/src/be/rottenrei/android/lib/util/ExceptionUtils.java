@@ -11,11 +11,11 @@ import be.rottenrei.android.lib.R;
 public class ExceptionUtils {
 
 	/** The throwable can be null. */
-	public static void shouldNeverBeReached(Activity activity, Throwable cause) {
+	public static void shouldNeverBeReached(Context context, Throwable cause) {
 		if (cause == null) {
 			cause = new IllegalStateException("An impossible state has been reached");
 		}
-		handleFatalExceptionWithMessage(cause, activity, R.string.error_internal);
+		handleFatalExceptionWithMessage(cause, context, R.string.error_internal);
 	}
 
 	/** Logs the exception and displays the warning message to the user. */
